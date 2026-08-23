@@ -1,0 +1,2 @@
+-- Database schema placeholder for AI-Powered Packaged Product Compliance Verification System
+-- Table schemas will be defined in subsequent phases.
