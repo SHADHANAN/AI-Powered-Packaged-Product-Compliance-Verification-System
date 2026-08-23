@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import ImageUploader from "../components/ImageUploader";
 import VerificationButton from "../components/VerificationButton";
 import LoadingState from "../components/LoadingState";
@@ -9,14 +9,68 @@ import ComplianceResults from "../components/ComplianceResults";
 import AIExplanation from "../components/AIExplanation";
 import Recommendations from "../components/Recommendations";
 import OCRResults from "../components/OCRResults";
-import { verifyProductImage } from "../services/api";
+import { verifyProductImage, getVerificationById } from "../services/api";
 
-export default function VerificationPage() {
+export default function VerificationPage({ activeVerificationId, onClearActiveVerification }) {
   const [selectedFile, setSelectedFile] = useState(null);
   const [strategy, setStrategy] = useState("standard");
   const [loading, setLoading] = useState(false);
   const [errorMessage, setErrorMessage] = useState(null);
   const [result, setResult] = useState(null);
+
+  // If an activeVerificationId is passed from History, load details
+  useEffect(() => {
+    if (activeVerificationId) {
+      loadVerificationDetails(activeVerificationId);
+    }
+  }, [activeVerificationId]);
+
+  const loadVerificationDetails = async (id) => {
+    setLoading(true);
+    setErrorMessage(null);
+    try {
+      const data = await getVerificationById(id);
+      if (data) {
+        // Map database model fields to result schema
+        const mappedResult = {
+          success: true,
+          verification_id: data.id,
+          product_id: data.product_id,
+          overall_status: data.verification_status,
+          overall_score: data.overall_score || 100.0,
+          extracted_fields: data.extracted_fields || [],
+          compliance_checks: data.compliance_checks || [],
+          ocr: {
+            text: data.extracted_fields?.map((f) => f.source_text).filter(Boolean).join("\n") || "Historical text logged in session.",
+            average_confidence: 0.95,
+            line_count: data.extracted_fields?.length || 0,
+          },
+          explanation: {
+            summary: `Inspection session #${data.id} recorded on ${new Date(data.completed_at || data.created_at).toLocaleDateString()}. Overall compliance status: ${data.verification_status.toUpperCase()}.`,
+            items: data.compliance_checks?.map((c) => ({
+              rule_code: c.rule_code,
+              rule_name: c.rule_name,
+              status: c.status,
+              severity: c.severity,
+              explanation: c.explanation,
+              why_it_matters: "Statutory mandatory declaration mandated under Legal Metrology Rules.",
+              recommended_action: c.status === "PASS" ? "Declaration is compliant." : `Remediate: ${c.expected_value}`,
+              evidence: `Actual: ${c.actual_value || 'Missing'}`,
+              confidence: 0.95,
+            })) || [],
+            recommendations: data.compliance_checks?.filter((c) => (c.status || '').toUpperCase() === 'FAIL').map((c) => `Remediate ${c.rule_name} (${c.rule_code}): Provide ${c.expected_value}`) || ["All statutory packaging declarations meet verified standards."],
+            ai_generated: false,
+          },
+        };
+        setResult(mappedResult);
+      }
+    } catch (err) {
+      console.error("Failed to load historical verification:", err);
+      setErrorMessage("Failed to load verification session details.");
+    } finally {
+      setLoading(false);
+    }
+  };
 
   const handleFileSelect = (file) => {
     setSelectedFile(file);
@@ -33,6 +87,7 @@ export default function VerificationPage() {
     setResult(null);
     setErrorMessage(null);
     setLoading(false);
+    if (onClearActiveVerification) onClearActiveVerification();
   };
 
   const handleVerify = async () => {
@@ -69,7 +124,7 @@ export default function VerificationPage() {
 
   return (
     <main className="main-content-layout">
-      {/* Upload Panel (Always visible before result, or can be collapsed when result is present) */}
+      {/* Upload Panel */}
       {!result && (
         <div className="upload-container-wrapper">
           <div className="text-center mb-6">

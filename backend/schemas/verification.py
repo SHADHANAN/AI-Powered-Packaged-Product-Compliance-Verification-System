@@ -1,5 +1,5 @@
 from datetime import datetime
-from typing import List, Optional
+from typing import List, Optional, Dict, Any
 from pydantic import BaseModel, ConfigDict, Field
 from backend.schemas.product import ProductResponse
 from backend.schemas.extracted_field import ExtractedFieldResponse
@@ -37,6 +37,25 @@ class VerificationResponse(VerificationBase):
     model_config = ConfigDict(from_attributes=True)
 
 
+class VerificationListItem(VerificationResponse):
+    """
+    Verification record with associated product metadata for history listing.
+    """
+    product: Optional[ProductResponse] = None
+
+    model_config = ConfigDict(from_attributes=True)
+
+
+class VerificationListResponse(BaseModel):
+    """
+    Paginated list of past verification records.
+    """
+    items: List[VerificationListItem]
+    total: int
+    skip: int
+    limit: int
+
+
 class VerificationDetailResponse(VerificationResponse):
     """
     Detailed verification response including product, extracted fields, and compliance checks.
@@ -46,3 +65,25 @@ class VerificationDetailResponse(VerificationResponse):
     compliance_checks: List[ComplianceCheckResponse] = []
 
     model_config = ConfigDict(from_attributes=True)
+
+
+class VerificationReportResponse(BaseModel):
+    """
+    Comprehensive compliance audit report payload for a verification session.
+    """
+    verification_id: int
+    product_id: int
+    product_name: str
+    brand_name: Optional[str] = None
+    overall_status: str
+    overall_score: float
+    verified_at: Optional[datetime] = None
+    summary: str
+    total_checks: int
+    passed_checks: int
+    failed_checks: int
+    warning_checks: int
+    extracted_fields: List[Dict[str, Any]]
+    compliance_checks: List[Dict[str, Any]]
+    recommendations: List[str]
+    markdown_report: str

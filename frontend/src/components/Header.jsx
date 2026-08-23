@@ -1,7 +1,7 @@
 import React from "react";
-import { ShieldCheck, Scale, Sparkles } from "lucide-react";
+import { ShieldCheck, Scale, ScanLine, History } from "lucide-react";
 
-export default function Header() {
+export default function Header({ activeTab, onTabChange }) {
   return (
     <header className="header-container">
       <div className="header-content">
@@ -21,10 +21,22 @@ export default function Header() {
           </div>
         </div>
 
-        <div className="header-meta">
-          <div className="status-pill">
-            <span className="status-indicator-dot"></span>
-            <span>LM Rules Engine v1.0</span>
+        <div className="header-actions flex items-center gap-3">
+          <div className="nav-tabs flex bg-slate-900/80 p-1 rounded-lg border border-slate-800">
+            <button
+              onClick={() => onTabChange("verify")}
+              className={`nav-tab flex items-center gap-1.5 px-3 py-1 text-xs font-semibold rounded-md transition-all ${activeTab === "verify" ? "bg-cyan-600 text-white shadow-sm" : "text-slate-400 hover:text-slate-200"}`}
+            >
+              <ScanLine className="w-3.5 h-3.5" />
+              <span>Verify Product</span>
+            </button>
+            <button
+              onClick={() => onTabChange("history")}
+              className={`nav-tab flex items-center gap-1.5 px-3 py-1 text-xs font-semibold rounded-md transition-all ${activeTab === "history" ? "bg-cyan-600 text-white shadow-sm" : "text-slate-400 hover:text-slate-200"}`}
+            >
+              <History className="w-3.5 h-3.5" />
+              <span>Inspection History</span>
+            </button>
           </div>
         </div>
       </div>
