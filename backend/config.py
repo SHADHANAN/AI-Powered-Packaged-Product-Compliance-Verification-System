@@ -31,6 +31,18 @@ class Settings(BaseSettings):
     DB_MAX_OVERFLOW: int = 10
     DB_POOL_TIMEOUT: int = 30
     DB_POOL_PRE_PING: bool = True
+    DB_POOL_RECYCLE: int = 1800
+
+    # Security & Upload Configuration
+    MAX_UPLOAD_SIZE_BYTES: int = 20 * 1024 * 1024  # 20 MB
+    ALLOWED_IMAGE_EXTENSIONS: List[str] = [".jpg", ".jpeg", ".png", ".bmp", ".webp", ".tiff", ".tif"]
+
+    # LLM & AI Explanation configuration
+    LLM_PROVIDER: str = "mock"
+    LLM_API_KEY: Union[str, None] = None
+    LLM_MODEL: str = "gemini-1.5-flash"
+    LLM_TIMEOUT: float = 10.0
+    LLM_TEMPERATURE: float = 0.1
 
     # CORS configuration - default allowed origins for frontend applications
     CORS_ORIGINS: Union[List[str], str] = [

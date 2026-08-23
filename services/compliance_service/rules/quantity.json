@@ -1,0 +1,20 @@
+{
+  "category": "quantity_rules",
+  "rules": [
+    {
+      "rule_code": "LM-QTY-001",
+      "rule_name": "Valid Metric Quantity Magnitude",
+      "severity": "CRITICAL",
+      "expected_value": "Net quantity magnitude must be numeric and strictly greater than zero",
+      "enabled": true
+    },
+    {
+      "rule_code": "LM-QTY-002",
+      "rule_name": "Standard Legal Metrology Unit",
+      "severity": "HIGH",
+      "expected_value": "Measurement unit must be standard metric symbol: 'g', 'kg', 'mg', 'ml', 'l', or count 'pcs'",
+      "supported_units": ["g", "kg", "mg", "ml", "l", "pcs"],
+      "enabled": true
+    }
+  ]
+}

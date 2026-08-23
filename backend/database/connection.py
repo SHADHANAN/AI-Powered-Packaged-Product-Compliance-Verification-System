@@ -28,6 +28,7 @@ def get_engine_args(database_url: str) -> dict:
             "max_overflow": settings.DB_MAX_OVERFLOW,
             "pool_timeout": settings.DB_POOL_TIMEOUT,
             "pool_pre_ping": settings.DB_POOL_PRE_PING,
+            "pool_recycle": getattr(settings, "DB_POOL_RECYCLE", 1800),
         })
 
     return engine_kwargs

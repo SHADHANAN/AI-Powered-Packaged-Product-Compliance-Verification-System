@@ -1,0 +1,19 @@
+{
+  "category": "declaration_relationships",
+  "rules": [
+    {
+      "rule_code": "LM-DECL-001",
+      "rule_name": "Imported Commodity Origin & Importer Declaration",
+      "severity": "HIGH",
+      "expected_value": "Imported products must declare both importer identity and country of origin",
+      "enabled": true
+    },
+    {
+      "rule_code": "LM-DECL-002",
+      "rule_name": "Manufacturing and Expiry Date Sequence",
+      "severity": "MEDIUM",
+      "expected_value": "Expiry or use-by date must not precede date of manufacture",
+      "enabled": true
+    }
+  ]
+}

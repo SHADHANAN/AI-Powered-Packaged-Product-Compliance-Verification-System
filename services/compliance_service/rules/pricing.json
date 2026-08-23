@@ -1,0 +1,12 @@
+{
+  "category": "pricing_rules",
+  "rules": [
+    {
+      "rule_code": "LM-PRICE-001",
+      "rule_name": "Valid Maximum Retail Price Format",
+      "severity": "CRITICAL",
+      "expected_value": "MRP must be a valid positive Indian Rupee amount (greater than zero)",
+      "enabled": true
+    }
+  ]
+}

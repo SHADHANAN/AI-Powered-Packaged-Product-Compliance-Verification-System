@@ -1,5 +1,17 @@
 import logging
+import re
 import sys
+
+
+def mask_sensitive_data(text: str) -> str:
+    """
+    Masks API keys, passwords, and sensitive credentials in log strings.
+    """
+    if not isinstance(text, str):
+        return text
+    # Mask API keys and tokens
+    text = re.sub(r'(?i)(api[_-]?key|secret|token|password|auth|bearer)\s*[:=]\s*["\']?([^"\'\s]{4})[^"\'\s]+([^"\'\s]{4})["\']?', r'\1: \2****\3', text)
+    return text
 
 
 def setup_logger(name: str = "compliance_backend") -> logging.Logger:
@@ -22,3 +34,4 @@ def setup_logger(name: str = "compliance_backend") -> logging.Logger:
 
 
 logger = setup_logger()
+

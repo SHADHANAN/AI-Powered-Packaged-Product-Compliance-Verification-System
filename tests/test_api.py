@@ -22,6 +22,11 @@ def test_openapi_docs(client: TestClient):
     assert "/api/health" in schema["paths"]
     assert "/api/products" in schema["paths"]
     assert "/api/verifications/{verification_id}" in schema["paths"]
+    assert "/api/ocr" in schema["paths"]
+    assert "/api/extract" in schema["paths"]
+    assert "/api/compliance/evaluate" in schema["paths"]
+    assert "/api/explanation" in schema["paths"]
+    assert "/api/verify" in schema["paths"]
 
 
 def test_cors_headers(client: TestClient):
