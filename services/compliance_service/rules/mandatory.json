@@ -1,0 +1,77 @@
+{
+  "category": "mandatory_declarations",
+  "rules": [
+    {
+      "rule_code": "LM-MANDATORY-001",
+      "rule_name": "Product / Commodity Name",
+      "field": "product_name",
+      "required": true,
+      "severity": "HIGH",
+      "expected_value": "Commodity/Product name must be clearly declared",
+      "enabled": true
+    },
+    {
+      "rule_code": "LM-MANDATORY-002",
+      "rule_name": "Net Quantity Declaration",
+      "field": "net_quantity",
+      "required": true,
+      "severity": "CRITICAL",
+      "expected_value": "Net quantity must be declared with standard metric unit",
+      "enabled": true
+    },
+    {
+      "rule_code": "LM-MANDATORY-003",
+      "rule_name": "Maximum Retail Price (MRP)",
+      "field": "mrp",
+      "required": true,
+      "severity": "CRITICAL",
+      "expected_value": "MRP inclusive of all taxes must be declared in INR",
+      "enabled": true
+    },
+    {
+      "rule_code": "LM-MANDATORY-004",
+      "rule_name": "Manufacturer / Packer Identity",
+      "field": "manufacturer_name",
+      "required": true,
+      "severity": "HIGH",
+      "expected_value": "Name and complete address of the manufacturer or packer must be declared",
+      "enabled": true
+    },
+    {
+      "rule_code": "LM-MANDATORY-005",
+      "rule_name": "Date of Manufacture / Packing",
+      "field": "date_of_manufacture",
+      "required": true,
+      "severity": "HIGH",
+      "expected_value": "Month and year of manufacture or packaging must be declared",
+      "enabled": true
+    },
+    {
+      "rule_code": "LM-MANDATORY-006",
+      "rule_name": "Batch or Lot Number",
+      "field": "batch_number",
+      "required": true,
+      "severity": "MEDIUM",
+      "expected_value": "Distinct batch or lot number must be declared",
+      "enabled": true
+    },
+    {
+      "rule_code": "LM-MANDATORY-007",
+      "rule_name": "Consumer Care Information",
+      "field": "customer_care_details",
+      "required": true,
+      "severity": "HIGH",
+      "expected_value": "Consumer grievance redressal telephone number, email, or contact address must be declared",
+      "enabled": true
+    },
+    {
+      "rule_code": "LM-MANDATORY-008",
+      "rule_name": "Country of Origin",
+      "field": "country_of_origin",
+      "required": true,
+      "severity": "HIGH",
+      "expected_value": "Country of origin must be declared (mandatory for all packaged commodities and imported goods)",
+      "enabled": true
+    }
+  ]
+}
